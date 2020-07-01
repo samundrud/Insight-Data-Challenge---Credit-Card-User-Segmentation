@@ -1,66 +1,88 @@
-# ApplicantScore
-___Fast Track Top Talent___
+# Credit Card User Segmentation
+___Insight Data Challenge___
 
-This consulting project was completed as part of the Insight Data Science Fellowship program (New York, YN, Summer 2020) by Sarah Amundrud.
+This data challange was completed as part of the Insight Data Science Fellowship program (New York, YN, Summer 2020) by Sarah Amundrud.
 
-This is the public repository of the project, which does not include any data.
 
 
 # Table of Contents
-1. [Introduction](README.md#introduction)
+1. [Problem](README.md#introduction)
 2. [Data](README.md#data)
 3. [Approach](README.md#approach)
-4. [Requirements](README.md#requirements)
-5. [Repository Contents](README.md#repository-contents)
+4. [Outcome](README.md#outcome)
  
  
  
-# Introduction
-My client, a tech company that hires people across several tech domains (e.g., data science, data engineering, etc.), receives more than 12,000 applications a year for less than 1,000 open positions.
-Processing and ranking applications manually can take several weeks, resulting in a slow response rate to applicants. 
-To help my client reduce their application processing time and respond to top applicants in days rather than weeks (i.e., for interview requests), I used machine learning and natural language processing (NLP) to develop an algorithm that scores and ranks applications, thus allowing my client to prioritize and fast track high quality applications. In addition to significantly speeding up the response time, my product saves my client roughly 2000h/year in manual processing and ranking of applications. 
+# Problem
+You work as a data scientist at a credit card company. A senior VP is leading an effort to reduce costs associated with signup incentives by offering credit cards with carefully targeted benefits that will attract new cardholders. As a first step, she would like you to examine cardholder data collected over the last 6 months in order to understand the various kinds of users who use the company’s products. Sh/e is especially interested in getting an idea of which benefits to associate with each new card offering.
+
 
 # Data
-I obtained 3,600 job applications that were labeled as either no (the application was rejected during the first round of review) or Yes+ (the application went on to the next stage). The applications consisted almost entirely of unstructured data; namely, the applicants answers to a variety of application questions, ranging from describing their education and professional background, domain knowledge, industry specific skills, along what motivated them to apply for the position. 
+
+The Data The data consists of a csv file with 8950 rows (one for each cardholder) organized in columns with descriptive headers. Key to column labels:
+
+    CUST_ID : Credit card holder ID
+    BALANCE : Monthly average balance (based on daily balance averages)
+    BALANCE_FREQUENCY : Ratio of last 12 months with balance
+    PURCHASES : Total purchase amount spent during last 12 months
+    ONEOFF_PURCHASES : Total amount of one-off purchases
+    INSTALLMENTS_PURCHASES : Total amount of installment purchases
+    CASH_ADVANCE : Total cash-advance amount
+    PURCHASES_ FREQUENCY : Frequency of purchases (percentage of months with at least one purchase)
+    ONEOFF_PURCHASES_FREQUENCY : Frequency of one-off-purchases
+    PURCHASES_INSTALLMENTS_FREQUENCY : Frequency of installment purchases
+    CASHADVANCE FREQUENCY : Cash-Advance frequency
+    CASH_ADVANCE_TRX : Average amount of Cash-Advance transaction
+    PURCHASES_TRX : Average amount per purchase transaction
+    CREDIT_LIMIT : Credit limit
+    PAYMENTS : Total payments (due amount paid by the customer to decrease their statement balance) in the period
+    MINIMUM_PAYMENTS: Minimum payment required on statement (average?)
+    PRC_FULL_PAYMENT: percent full payment (percent of balance they pay off each months?)
+    TENURE: months (in the last year) they have been with company
+
 
  
 # Approach
-I trained five logistic regression models (one for each of five tech domains my client is involved in) that ranks unstructured text based job applications.
-From the text based answers to application questions, I engineered features using a targeted keyword extraction approach that was based on detailed discussions with hiring managers who have deep domain knowledge. The resulting features were related to an applicant's relevant background, required skills, as well as domain knowledge. 
+
+K Means Clustering
 
 
 
-# Requirements
 
-The following languages and packages were used in this project:
+# Outcome
 
-* python 3.7.4
-* numpy 1.16.5
-* pandas 0.25.1
-* matplotlib 3.1.1
-* seaborn 0.9.0
-* scikit-learn 0.23.1 
-* nltk 3.4.5
+Business Insights
+Description of customer type and targeted recommendations
 
+Cluster 0: Credit Card Debtsters (24% of users)
+    keep high balance
+    only make minimum payments
+Targeted Benefits to new customers:
+    offer balance transfers with low introductory rates
 
-As this project contains confidential information (i.e., applications to the Insight fellowship programs), the data is not published in this repository.
+Cluster 1: Installment Spenders (11% of users)
+    high spenders
+    use card primarily on recurrend installments (e.g., bills)
+Targeted Benefits to new customers:
+    offer recurrent bill payment incentives for the first year (e.g., points, travel, cash back, etc.)
 
+Cluster 2: Credit Card Collectors (32% of customer base)
+    they have a huge credit limit
+    do not tend to use their card much, and always pay off their bill right away
+    they likely use it as a back up card
+Targeted Benefits to new customers:
+    we don't want attrackt more of this type of customer, because they don't make us any money
 
-# Repository Contents
+Cluster 3: Shoppers (13% of customer base)
+    high spenders (mostly on one-off purchases)
+    low credit limit
+Targeted Benefits to new customers:
+    offer purchase incentives for the first year (e.g., points, travel, cash back, etc.)
 
-* __0_AppProcessor.py__ - Processes unstructured text based answers and creates structured data set with relevant features
+Cluster 4: Cash Grabbers (23% of customer base)
+    use card primarily for cash advances and not to make purchases
+    low credit limit
+Targeted Benefits to new customers:
+    offer low introductory cash advance fee for the first yea
 
-* __0_AppScorer.py__ - Creates applicant scores for each domain
-
-* __1_Domain_Model_DS.ipynb__ - Model for Data Science
-
-* __2_Domain_Model_HD.ipynb__ - Model for Health Data Science
-
-* __3_Domain_Model_AI.ipynb__ - Model for Artificial Intelligence
-
-* __4_Domain_Model_DE.ipynb__ - Model for Data Engineering
-
-* __5_Domain_Model_DO.ipynb__ - Model for DevOps
-
-* __Models__ - Folder containing models and features for the various domains
 
